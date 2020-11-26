@@ -1,4 +1,4 @@
-package com.ext.teros.message_object;
+package com.ext.teros.message;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
