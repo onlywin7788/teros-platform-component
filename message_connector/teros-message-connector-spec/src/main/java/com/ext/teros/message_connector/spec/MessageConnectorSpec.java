@@ -2,7 +2,7 @@ package com.ext.teros.message_connector.spec;
 
 public interface MessageConnectorSpec {
 
-	public void loadConfig(String config) throws Exception;
+	public void loadConfig(String configPath) throws Exception;
 	public void initialize() throws Exception;
 	public void connect() throws Exception;
 	public void open() throws Exception;
