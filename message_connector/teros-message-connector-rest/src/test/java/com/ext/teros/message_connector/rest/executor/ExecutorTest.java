@@ -23,9 +23,11 @@ public class ExecutorTest {
 
         Executor executor = new Executor();
         executor.loadConfig(configPath);
-        executor.setData(contents);
+        executor.initialize();
+        executor.setInputData(contents);
         executor.input();
+        MessageObject messageObject = (MessageObject)executor.getInputData();
 
-        MessageObject messageObject = (MessageObject)executor.getData();
+        int aa = 5;
     }
 }

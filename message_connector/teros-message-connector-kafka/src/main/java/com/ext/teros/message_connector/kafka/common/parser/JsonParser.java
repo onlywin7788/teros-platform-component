@@ -6,14 +6,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class JsonParser {
 
-    public JsonElement getJsonElementFromPath(String jsonString, String path) {
+    Gson gson = null;
+    JsonElement json = null;
 
-        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
-        JsonElement json = jsonObject;
+    public JsonParser() {
+        gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+    }
 
-        String[] parts = path.split("\\.|\\[|\\]");
-        JsonElement result = json;
+    public void loadString(String contents) {
+        JsonObject jsonObject = gson.fromJson(contents, JsonObject.class);
+        json = jsonObject;
+    }
+
+    public String getTextFromElement(String path) throws Exception {
+        String returnString = "";
+
+        JsonElement jsonElement = getJsonElementFromPath(path);
+        returnString = jsonElement.getAsString();
+
+        if (returnString == null)
+            returnString = "";
+
+        return returnString;
+    }
+
+    public JsonElement getJsonElementFromPath(String path) throws Exception {
+
+//        String[] parts = path.split("\\.|\\[|\\]");
+        String[] parts = path.split("\\/|\\[|\\]");
+
+        JsonElement returnElement = json;
 
         for (String key : parts) {
 
@@ -21,19 +43,50 @@ public class JsonParser {
             if (key.isEmpty())
                 continue;
 
-            if (result == null) {
-                result = JsonNull.INSTANCE;
+            if (returnElement == null) {
+                returnElement = JsonNull.INSTANCE;
                 break;
             }
 
-            if (result.isJsonObject()) {
-                result = ((JsonObject) result).get(key);
-            } else if (result.isJsonArray()) {
+            if (returnElement.isJsonObject()) {
+                returnElement = ((JsonObject) returnElement).get(key);
+            } else if (returnElement.isJsonArray()) {
                 int ix = Integer.valueOf(key) - 1;
-                result = ((JsonArray) result).get(ix);
+                returnElement = ((JsonArray) returnElement).get(ix);
             } else break;
         }
 
-        return result;
+        return returnElement;
+    }
+
+    public JsonArray addJsonArray(JsonArray acquireJsonArray, JsonObject jsonObject) {
+
+        JsonArray jsonArray = acquireJsonArray;
+        try {
+            if (jsonArray == null)
+                jsonArray = new JsonArray();
+
+            jsonArray.add(jsonObject);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return jsonArray;
+    }
+
+
+    public JsonObject addJsonObject(JsonObject acquireJsonObject, String key, JsonElement jsonElement) {
+
+        JsonObject jsonObject = acquireJsonObject;
+        try {
+            if (jsonObject == null)
+                jsonObject = new JsonObject();
+
+            jsonObject.add(key, jsonElement);
+        } catch (Exception e) {
+            throw e;
+        }
+        return jsonObject;
     }
 }

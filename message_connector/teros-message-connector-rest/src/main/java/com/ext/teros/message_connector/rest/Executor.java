@@ -8,11 +8,11 @@ import com.ext.teros.message_connector.rest.common.config.NodeProperties;
 import com.ext.teros.message_connector.rest.common.parser.XmlParser;
 import com.ext.teros.message_connector.rest.config.NodeConfig;
 import com.ext.teros.message_connector.rest.information.ProgramInformation;
+
 import com.ext.teros.message_connector.spec.MessageConnectorSpec;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.util.Properties;
 
 public class Executor implements MessageConnectorSpec {
 
@@ -25,6 +25,7 @@ public class Executor implements MessageConnectorSpec {
     MessageConverter messageConverter = null;
     MessageSet messageSet = null;
     String rawMessage = "";
+    int messageFormatFlag = 0;
 
 
     //extra
@@ -61,7 +62,6 @@ public class Executor implements MessageConnectorSpec {
 
     @Override
     public void initialize() throws Exception {
-
     }
 
     @Override
@@ -77,13 +77,7 @@ public class Executor implements MessageConnectorSpec {
     @Override
     public void preInput() throws Exception {
 
-    }
-
-    @Override
-    public void input() throws Exception {
-
         String messageFormat = nodeConfig.getMessageSetFormat();
-        int messageFormatFlag = 0;
 
         if (messageFormat.equals("xml"))
             messageFormatFlag = messageConverter.XML_TO_OBJECT;
@@ -93,6 +87,11 @@ public class Executor implements MessageConnectorSpec {
             messageFormatFlag = messageConverter.CSV_TO_OBJECT;
         if (messageFormat.equals("fixed"))
             messageFormatFlag = messageConverter.FIXED_TO_OBJECT;
+
+    }
+
+    @Override
+    public void input() throws Exception {
 
         this.messageObject = messageConverter.convertToObject(messageFormatFlag, this.messageSet
                 , this.rawMessage.getBytes());
@@ -142,13 +141,23 @@ public class Executor implements MessageConnectorSpec {
     }
 
     @Override
-    public Object getData() throws Exception {
+    public void setInputData(Object object) throws Exception {
+        this.rawMessage = (String) object;
+    }
+
+    @Override
+    public void setOutputData(Object object) throws Exception {
+        this.rawMessage = (String) object;
+    }
+
+    @Override
+    public Object getInputData() throws Exception {
         return this.messageObject;
     }
 
     @Override
-    public void setData(Object object) throws Exception {
-        this.rawMessage = (String) object;
+    public Object getOutputData() throws Exception {
+        return this.messageObject;
     }
 
     @Override

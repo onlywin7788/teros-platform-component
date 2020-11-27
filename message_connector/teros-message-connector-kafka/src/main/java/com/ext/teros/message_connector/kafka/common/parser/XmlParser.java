@@ -1,17 +1,22 @@
 package com.ext.teros.message_connector.kafka.common.parser;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class XmlParser {
 
@@ -47,6 +52,72 @@ public class XmlParser {
         }
     }
 
+    public void loadString(String contents) throws Exception {
+
+        try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            document = builder.parse(new ByteArrayInputStream(contents.getBytes()));
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void createXmlDocument() throws Exception {
+
+        try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public String getDocumentString() throws Exception {
+
+        StringWriter stringWriter = new StringWriter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+        transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+        return stringWriter.toString();
+    }
+
+    public Element createElement(Element acquireElement, String nodeName, String nodeText) {
+
+        Element newElement = null;
+
+        try {
+            newElement = document.createElement(nodeName);
+            if (nodeText != null) {
+                if (nodeText.length() > 0)
+                    newElement.appendChild(document.createTextNode(nodeText));
+            }
+
+            if (acquireElement == null)
+                document.appendChild(newElement);
+            else
+                acquireElement.appendChild(newElement);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return newElement;
+    }
+
+
     public Node getNode(String path) throws Exception {
         Node node = null;
         try {
@@ -64,19 +135,48 @@ public class XmlParser {
         return node;
     }
 
-    public NodeList getNodeList(String path) throws Exception {
+    public ArrayList<Node> getNodeList(String path) throws Exception {
         NodeList nodeList = null;
+        ArrayList<Node> arrayNodeList = new ArrayList<Node>();
         try {
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPath xpath = xpathFactory.newXPath();
             XPathExpression xPathExpr = xpath.compile(path);
-
             nodeList = (NodeList) xPathExpr.evaluate(document, XPathConstants.NODESET);
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                if (node.getNodeType() == Node.TEXT_NODE)
+                    continue;
+                arrayNodeList.add(node);
+            }
 
         } catch (Exception e) {
             throw e;
         }
-        return nodeList;
+        return arrayNodeList;
+    }
+
+    public ArrayList<Node> getNodeChildListFromNode(Node acquireNode) throws Exception {
+        NodeList childNodeList = null;
+        ArrayList<Node> arrayNodeList = new ArrayList<Node>();
+
+        try {
+            childNodeList = acquireNode.getChildNodes();
+
+            // record list
+            for (int i = 0; i < childNodeList.getLength(); i++) {
+
+                Node node = childNodeList.item(i);
+                if (node.getNodeType() == Node.TEXT_NODE)
+                    continue;
+
+                arrayNodeList.add(node);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return arrayNodeList;
     }
 
     public String getNodeText(String path) throws Exception {
@@ -87,7 +187,56 @@ public class XmlParser {
         } catch (Exception e) {
             throw e;
         }
+
+        if (returnString == null)
+            returnString = "";
+
         return returnString;
+    }
+
+    public ConcurrentHashMap<String, String> getNodeAttributes(String path) throws Exception {
+
+        String returnString = "";
+        ConcurrentHashMap<String, String> attrMap = new ConcurrentHashMap<String, String>();
+
+        try {
+            Node node = getNode(path);
+            NamedNodeMap namedNodeMap = node.getAttributes();
+
+            for (int i = 0; i < namedNodeMap.getLength(); i++) {
+                Attr attr = (Attr) namedNodeMap.item(i);
+                String attrName = attr.getNodeName();
+                String attrValue = attr.getNodeValue();
+
+                attrMap.put(attrName, attrValue);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+        return attrMap;
+    }
+
+    public ConcurrentHashMap<String, String> getNodeAttributesFromNode(Node node) throws Exception {
+
+        String returnString = "";
+        ConcurrentHashMap<String, String> attrMap = new ConcurrentHashMap<String, String>();
+
+        try {
+            NamedNodeMap namedNodeMap = node.getAttributes();
+
+            for (int i = 0; i < namedNodeMap.getLength(); i++) {
+                Attr attr = (Attr) namedNodeMap.item(i);
+                String attrName = attr.getNodeName();
+                String attrValue = attr.getNodeValue();
+
+                attrMap.put(attrName, attrValue);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+        return attrMap;
     }
 
     public String getNodeAttr(String path, String attrName) throws Exception {
@@ -100,6 +249,10 @@ public class XmlParser {
         } catch (Exception e) {
             throw e;
         }
+
+        if (returnString == null)
+            returnString = "";
+
         return returnString;
     }
 
@@ -111,6 +264,10 @@ public class XmlParser {
         } catch (Exception e) {
             throw e;
         }
+
+        if (returnString == null)
+            returnString = "";
+
         return returnString;
     }
 
@@ -118,8 +275,6 @@ public class XmlParser {
 
         String returnString = "";
         try {
-            //returnString = node.getAttributes().getNamedItem(attrName).getNodeValue();
-
             Node attr = node.getAttributes().getNamedItem(attrName);
             if (attr != null) {
                 returnString = attr.getNodeValue();
@@ -128,6 +283,10 @@ public class XmlParser {
         } catch (Exception e) {
             throw e;
         }
+
+        if (returnString == null)
+            returnString = "";
+
         return returnString;
     }
 }

@@ -18,11 +18,11 @@ public class CommonFile {
             return false;
     }
 
-    public String readFile(String ConfigPath) {
-        String contents = "";
+    public byte[] readFile(String ConfigPath) {
+        byte[] contents = null;
         try {
             File file = new File(ConfigPath);
-            contents = FileUtils.readFileToString(file, "UTF-8");
+            contents = FileUtils.readFileToByteArray(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
