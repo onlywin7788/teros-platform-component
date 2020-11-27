@@ -4,12 +4,13 @@ import com.ext.teros.message.model.message.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Setter
-public class MessageObject {
+public class MessageObject implements Serializable {
     String messageObjectName = "";
     ArrayList<Table> tableList = null;
     ConcurrentHashMap<String, String> optionMap = null;

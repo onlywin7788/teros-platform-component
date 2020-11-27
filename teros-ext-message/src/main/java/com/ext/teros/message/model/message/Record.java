@@ -3,12 +3,13 @@ package com.ext.teros.message.model.message;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Setter
 @Getter
-public class Record {
+public class Record implements Serializable {
 
     ArrayList<Field> fieldList;
     ConcurrentHashMap<String, String> optionMap = null;
