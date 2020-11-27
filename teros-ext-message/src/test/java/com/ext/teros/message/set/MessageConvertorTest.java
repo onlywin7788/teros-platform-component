@@ -1,14 +1,13 @@
 package com.ext.teros.message.set;
 
 import com.ext.teros.message.common.file.CommonFile;
-import com.ext.teros.message.convert.MessageConverter;
+import com.ext.teros.message.converter.MessageConverter;
 import com.ext.teros.message.loader.MessageSetLoader;
 import com.ext.teros.message.model.message.*;
 import com.ext.teros.message.object.MessageObject;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,6 +34,7 @@ public class MessageConvertorTest {
         MessageSet messageSet = null;
         MessageObject messageObject = null;
         String contents = "";
+        byte[] returnByte = null;
         messageSet = messageSetLoader.getMessageSet(messageSetFilePath);
         int testCase_toObject = 0;
         int testCase_fromObject = 0;
@@ -42,23 +42,41 @@ public class MessageConvertorTest {
 
         // CASE 1 : XML_TO_OBJECT
         // CASE 2 : JSON_TO_OBJECT
-        testCase_toObject = 1;
+        testCase_toObject = 2;
 
         // CASE 1 : OBJECT_TO_XML
         // CASE 2 : OBJECT_TO_JSON
-        testCase_fromObject = 1;
+        testCase_fromObject = 2;
 
 
         if (testCase_toObject == 1) {
             contents = commonFile.readFile(dataXmlPath);
-            messageObject = messageConverter.convert(messageConverter.XML_TO_OBJECT, messageSet, contents.getBytes());
+            messageObject = messageConverter.convertToObject(messageConverter.XML_TO_OBJECT, messageSet, contents.getBytes());
         }
         if (testCase_toObject == 2) {
             contents = commonFile.readFile(dataJsonPath);
-            messageObject = messageConverter.convert(messageConverter.JSON_TO_OBJECT, messageSet, contents.getBytes());
+            messageObject = messageConverter.convertToObject(messageConverter.JSON_TO_OBJECT, messageSet, contents.getBytes());
         }
 
+        System.out.println();
+        System.out.println("------------------------ TO OBJECT --------------------------");
+        System.out.println();
+
         messageObjectDump(messageObject);
+
+        System.out.println();
+        System.out.println("------------------------ FROM OBJECT --------------------------");
+        System.out.println();
+
+        if (testCase_fromObject == 1) {
+            returnByte = messageConverter.convertFromObject(messageConverter.OBJECT_TO_XML, messageObject);
+        }
+        if (testCase_fromObject == 2) {
+            returnByte = messageConverter.convertFromObject(messageConverter.OBJECT_TO_JSON, messageObject);
+        }
+
+        String outputString = new String(returnByte);
+        System.out.println(outputString);
     }
 
     public void messageObjectDump(MessageObject messageObject) throws Exception {
@@ -92,7 +110,7 @@ public class MessageConvertorTest {
 
                 // field
                 ArrayList<Field> fieldList = record.getFieldList();
-                for (int fieldIdx = 0; fieldIdx < recordList.size(); fieldIdx++) {
+                for (int fieldIdx = 0; fieldIdx < fieldList.size(); fieldIdx++) {
                     Field field = fieldList.get(fieldIdx);
 
                     optionMap = field.getOptionMap();

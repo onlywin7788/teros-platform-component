@@ -6,6 +6,11 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -61,6 +66,58 @@ public class XmlParser {
             throw e;
         }
     }
+
+    public void createXmlDocument() throws Exception {
+
+        try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public String getDocumentString() throws Exception {
+
+        StringWriter stringWriter = new StringWriter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+        transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+        return stringWriter.toString();
+    }
+
+    public Element createElement(Element acquireElement, String nodeName, String nodeText) {
+
+        Element newElement = null;
+
+        try {
+            newElement = document.createElement(nodeName);
+            if (nodeText != null) {
+                if (nodeText.length() > 0)
+                    newElement.appendChild(document.createTextNode(nodeText));
+            }
+
+            if (acquireElement == null)
+                document.appendChild(newElement);
+            else
+                acquireElement.appendChild(newElement);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return newElement;
+    }
+
 
     public Node getNode(String path) throws Exception {
         Node node = null;

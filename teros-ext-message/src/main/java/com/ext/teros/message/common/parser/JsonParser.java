@@ -24,7 +24,7 @@ public class JsonParser {
         JsonElement jsonElement = getJsonElementFromPath(path);
         returnString = jsonElement.getAsString();
 
-        if(returnString == null)
+        if (returnString == null)
             returnString = "";
 
         return returnString;
@@ -57,5 +57,36 @@ public class JsonParser {
         }
 
         return returnElement;
+    }
+
+    public JsonArray addJsonArray(JsonArray acquireJsonArray, JsonObject jsonObject) {
+
+        JsonArray jsonArray = acquireJsonArray;
+        try {
+            if (jsonArray == null)
+                jsonArray = new JsonArray();
+
+            jsonArray.add(jsonObject);
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return jsonArray;
+    }
+
+
+    public JsonObject addJsonObject(JsonObject acquireJsonObject, String key, JsonElement jsonElement) {
+
+        JsonObject jsonObject = acquireJsonObject;
+        try {
+            if (jsonObject == null)
+                jsonObject = new JsonObject();
+
+            jsonObject.add(key, jsonElement);
+        } catch (Exception e) {
+            throw e;
+        }
+        return jsonObject;
     }
 }
