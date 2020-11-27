@@ -17,8 +17,10 @@ public interface MessageConnectorSpec {
 	public void close() throws Exception;
 	public void disconnect() throws Exception;
 	public void uninitialize() throws Exception;
-	public Object getData() throws Exception;
-	public void setData(Object object) throws Exception;
+	public void setInputData(Object object) throws Exception;
+	public void setOutputData(Object object) throws Exception;
+	public Object getInputData() throws Exception;
+	public Object getOutputData() throws Exception;
 	public String getConnectorType() throws Exception;
 	public String getConnectorVersion() throws Exception;
 }
