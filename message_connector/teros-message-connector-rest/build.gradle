@@ -23,7 +23,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.5'
 	implementation 'commons-io:commons-io:2.6'
 	compileOnly 'org.projectlombok:lombok'
-	compileOnly fileTree(dir: 'E:/project/teros/ext/common', include: ['*.jar'])
+	compileOnly fileTree(dir: 'E:/teros_home/libs', include: ['*.jar'])
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
