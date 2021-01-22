@@ -18,275 +18,272 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class XmlParser {
 
+public class XmlParser {
     private Document document;
 
-    public void loadFile(String path) throws Exception {
+    public XmlParser() {
+    }
 
+    public void loadFile(String path) throws Exception {
         InputStream inputStream = null;
         Reader reader = null;
         InputSource is = null;
 
         try {
-            // file load and encoding utf-8
             File file = new File(path);
             inputStream = new FileInputStream(file);
             reader = new InputStreamReader(inputStream, "UTF-8");
             is = new InputSource(reader);
             is.setEncoding("UTF-8");
-
-            // xml load
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(is);
-        } catch (Exception e) {
-            throw e;
+            this.document = builder.parse(is);
+        } catch (Exception var11) {
+            throw var11;
         } finally {
             if (inputStream != null) {
                 inputStream.close();
             }
+
             if (reader != null) {
                 reader.close();
             }
+
         }
+
     }
 
     public void loadString(String contents) throws Exception {
-
         try {
-
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(new ByteArrayInputStream(contents.getBytes()));
-
-        } catch (Exception e) {
-            throw e;
+            this.document = builder.parse(new ByteArrayInputStream(contents.getBytes()));
+        } catch (Exception var4) {
+            throw var4;
         }
     }
 
     public void createXmlDocument() throws Exception {
-
         try {
-
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.newDocument();
-            document.setXmlStandalone(true);
+            this.document = builder.newDocument();
+            this.document.setXmlStandalone(true);
+        } catch (Exception var3) {
+            throw var3;
+        }
+    }
 
+    public void addElementProperty(Element acquireElement, String key, String value) throws Exception {
+        try {
+            acquireElement.setAttribute(key, value);
         } catch (Exception e) {
             throw e;
         }
     }
 
     public String getDocumentString() throws Exception {
-
         StringWriter stringWriter = new StringWriter();
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
-
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-
-        transformer.transform(new DOMSource(document), new StreamResult(stringWriter));
+        transformer.setOutputProperty("omit-xml-declaration", "no");
+        transformer.setOutputProperty("method", "xml");
+        transformer.setOutputProperty("indent", "yes");
+        transformer.setOutputProperty("encoding", "UTF-8");
+        transformer.transform(new DOMSource(this.document), new StreamResult(stringWriter));
         return stringWriter.toString();
     }
 
     public Element createElement(Element acquireElement, String nodeName, String nodeText) {
-
         Element newElement = null;
 
         try {
-            newElement = document.createElement(nodeName);
-            if (nodeText != null) {
-                if (nodeText.length() > 0)
-                    newElement.appendChild(document.createTextNode(nodeText));
+            newElement = this.document.createElement(nodeName);
+            if (nodeText != null && nodeText.length() > 0) {
+                newElement.appendChild(this.document.createTextNode(nodeText));
             }
 
-            if (acquireElement == null)
-                document.appendChild(newElement);
-            else
+            if (acquireElement == null) {
+                this.document.appendChild(newElement);
+            } else {
                 acquireElement.appendChild(newElement);
+            }
 
-        } catch (Exception e) {
-            throw e;
+            return newElement;
+        } catch (Exception var6) {
+            throw var6;
         }
-
-        return newElement;
     }
-
 
     public Node getNode(String path) throws Exception {
         Node node = null;
+
         try {
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPath xpath = xpathFactory.newXPath();
             XPathExpression xPathExpr = xpath.compile(path);
-
-            NodeList nodeList = (NodeList) xPathExpr.evaluate(document, XPathConstants.NODESET);
+            NodeList nodeList = (NodeList) xPathExpr.evaluate(this.document, XPathConstants.NODESET);
             if (nodeList.getLength() > 0) {
                 node = nodeList.item(0);
             }
-        } catch (Exception e) {
-            throw e;
+
+            return node;
+        } catch (Exception var7) {
+            throw var7;
         }
-        return node;
     }
 
     public ArrayList<Node> getNodeList(String path) throws Exception {
         NodeList nodeList = null;
-        ArrayList<Node> arrayNodeList = new ArrayList<Node>();
+        ArrayList arrayNodeList = new ArrayList();
+
         try {
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPath xpath = xpathFactory.newXPath();
             XPathExpression xPathExpr = xpath.compile(path);
-            nodeList = (NodeList) xPathExpr.evaluate(document, XPathConstants.NODESET);
+            nodeList = (NodeList) xPathExpr.evaluate(this.document, XPathConstants.NODESET);
 
-            for (int i = 0; i < nodeList.getLength(); i++) {
+            for (int i = 0; i < nodeList.getLength(); ++i) {
                 Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.TEXT_NODE)
-                    continue;
-                arrayNodeList.add(node);
+                if (node.getNodeType() != 3) {
+                    arrayNodeList.add(node);
+                }
             }
 
-        } catch (Exception e) {
-            throw e;
+            return arrayNodeList;
+        } catch (Exception var9) {
+            throw var9;
         }
-        return arrayNodeList;
     }
 
     public ArrayList<Node> getNodeChildListFromNode(Node acquireNode) throws Exception {
         NodeList childNodeList = null;
-        ArrayList<Node> arrayNodeList = new ArrayList<Node>();
+        ArrayList arrayNodeList = new ArrayList();
 
         try {
             childNodeList = acquireNode.getChildNodes();
 
-            // record list
-            for (int i = 0; i < childNodeList.getLength(); i++) {
-
+            for (int i = 0; i < childNodeList.getLength(); ++i) {
                 Node node = childNodeList.item(i);
-                if (node.getNodeType() == Node.TEXT_NODE)
-                    continue;
-
-                arrayNodeList.add(node);
+                if (node.getNodeType() != 3) {
+                    arrayNodeList.add(node);
+                }
             }
-        } catch (Exception e) {
-            throw e;
+
+            return arrayNodeList;
+        } catch (Exception var6) {
+            throw var6;
         }
-        return arrayNodeList;
     }
 
     public String getNodeText(String path) throws Exception {
-
         String returnString = "";
+
         try {
-            returnString = getNode(path).getTextContent();
-        } catch (Exception e) {
-            throw e;
+            returnString = this.getNode(path).getTextContent();
+        } catch (Exception var4) {
+            throw var4;
         }
 
-        if (returnString == null)
+        if (returnString == null) {
             returnString = "";
+        }
 
         return returnString;
     }
 
     public ConcurrentHashMap<String, String> getNodeAttributes(String path) throws Exception {
-
         String returnString = "";
-        ConcurrentHashMap<String, String> attrMap = new ConcurrentHashMap<String, String>();
+        ConcurrentHashMap attrMap = new ConcurrentHashMap();
 
         try {
-            Node node = getNode(path);
+            Node node = this.getNode(path);
             NamedNodeMap namedNodeMap = node.getAttributes();
 
-            for (int i = 0; i < namedNodeMap.getLength(); i++) {
+            for (int i = 0; i < namedNodeMap.getLength(); ++i) {
                 Attr attr = (Attr) namedNodeMap.item(i);
                 String attrName = attr.getNodeName();
                 String attrValue = attr.getNodeValue();
-
                 attrMap.put(attrName, attrValue);
             }
 
-        } catch (Exception e) {
-            throw e;
+            return attrMap;
+        } catch (Exception var10) {
+            throw var10;
         }
-        return attrMap;
     }
 
     public ConcurrentHashMap<String, String> getNodeAttributesFromNode(Node node) throws Exception {
-
         String returnString = "";
-        ConcurrentHashMap<String, String> attrMap = new ConcurrentHashMap<String, String>();
+        ConcurrentHashMap attrMap = new ConcurrentHashMap();
 
         try {
             NamedNodeMap namedNodeMap = node.getAttributes();
 
-            for (int i = 0; i < namedNodeMap.getLength(); i++) {
+            for (int i = 0; i < namedNodeMap.getLength(); ++i) {
                 Attr attr = (Attr) namedNodeMap.item(i);
                 String attrName = attr.getNodeName();
                 String attrValue = attr.getNodeValue();
-
                 attrMap.put(attrName, attrValue);
             }
 
-        } catch (Exception e) {
-            throw e;
+            return attrMap;
+        } catch (Exception var9) {
+            throw var9;
         }
-        return attrMap;
     }
 
     public String getNodeAttr(String path, String attrName) throws Exception {
-
         String returnString = "";
-        try {
-            Node node = getNode(path + "/@" + attrName);
-            returnString = node.getNodeValue();
 
-        } catch (Exception e) {
-            throw e;
+        try {
+            Node node = this.getNode(path + "/@" + attrName);
+            returnString = node.getNodeValue();
+        } catch (Exception var5) {
+            throw var5;
         }
 
-        if (returnString == null)
+        if (returnString == null) {
             returnString = "";
+        }
 
         return returnString;
     }
 
     public String getNodeTextFromNode(Node node) throws Exception {
-
         String returnString = "";
+
         try {
             returnString = node.getTextContent();
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception var4) {
+            throw var4;
         }
 
-        if (returnString == null)
+        if (returnString == null) {
             returnString = "";
+        }
 
         return returnString;
     }
 
     public String getNodeAttrFromNode(Node node, String attrName) throws Exception {
-
         String returnString = "";
+
         try {
             Node attr = node.getAttributes().getNamedItem(attrName);
             if (attr != null) {
                 returnString = attr.getNodeValue();
             }
-
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception var5) {
+            throw var5;
         }
 
-        if (returnString == null)
+        if (returnString == null) {
             returnString = "";
+        }
 
         return returnString;
     }
 }
+
