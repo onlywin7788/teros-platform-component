@@ -1,12 +1,15 @@
 package com.teros.ext.common.parser;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JsonParser {
-
-
     Gson gson = null;
     JsonElement json = null;
 
@@ -15,7 +18,7 @@ public class JsonParser {
     }
 
     public void loadString(String contents) {
-        JsonObject jsonObject = (JsonObject) this.gson.fromJson(contents, JsonObject.class);
+        JsonObject jsonObject = (JsonObject)this.gson.fromJson(contents, JsonObject.class);
         this.json = jsonObject;
     }
 
@@ -40,7 +43,7 @@ public class JsonParser {
         String[] var4 = parts;
         int var5 = parts.length;
 
-        for (int var6 = 0; var6 < var5; ++var6) {
+        for(int var6 = 0; var6 < var5; ++var6) {
             String key = var4[var6];
             key = key.trim();
             if (!key.isEmpty()) {
@@ -49,38 +52,37 @@ public class JsonParser {
                     break;
                 }
 
-                if (((JsonElement) returnElement).isJsonObject()) {
-                    returnElement = ((JsonObject) returnElement).get(key);
+                if (((JsonElement)returnElement).isJsonObject()) {
+                    returnElement = ((JsonObject)returnElement).get(key);
                 } else {
-                    if (!((JsonElement) returnElement).isJsonArray()) {
+                    if (!((JsonElement)returnElement).isJsonArray()) {
                         break;
                     }
 
                     int ix = Integer.valueOf(key) - 1;
-                    returnElement = ((JsonArray) returnElement).get(ix);
+                    returnElement = ((JsonArray)returnElement).get(ix);
                 }
             }
         }
 
-        if (returnElement != null)
-            if (returnElement.isJsonNull())
-                returnElement = null;
+        if (returnElement != null && ((JsonElement)returnElement).isJsonNull()) {
+            returnElement = null;
+        }
 
-        return (JsonElement) returnElement;
+        return (JsonElement)returnElement;
     }
-
 
     public JsonElement getJsonElementFromPath(JsonElement acquireElement, String path) throws Exception {
         String[] parts = path.split("\\/|\\[|\\]");
         JsonElement returnElement = acquireElement;
-
-        if (returnElement == null)
+        if (acquireElement == null) {
             returnElement = this.json;
+        }
 
         String[] var4 = parts;
         int var5 = parts.length;
 
-        for (int var6 = 0; var6 < var5; ++var6) {
+        for(int var6 = 0; var6 < var5; ++var6) {
             String key = var4[var6];
             key = key.trim();
             if (!key.isEmpty()) {
@@ -89,36 +91,38 @@ public class JsonParser {
                     break;
                 }
 
-                if (((JsonElement) returnElement).isJsonObject()) {
-                    returnElement = ((JsonObject) returnElement).get(key);
+                if (((JsonElement)returnElement).isJsonObject()) {
+                    returnElement = ((JsonObject)returnElement).get(key);
                 } else {
-                    if (!((JsonElement) returnElement).isJsonArray()) {
+                    if (!((JsonElement)returnElement).isJsonArray()) {
                         break;
                     }
 
                     int ix = Integer.valueOf(key) - 1;
-                    returnElement = ((JsonArray) returnElement).get(ix);
+                    returnElement = ((JsonArray)returnElement).get(ix);
                 }
             }
         }
 
-        if (returnElement != null)
-            if (returnElement.isJsonNull())
-                returnElement = null;
+        if (returnElement != null && ((JsonElement)returnElement).isJsonNull()) {
+            returnElement = null;
+        }
 
-        return (JsonElement) returnElement;
+        return (JsonElement)returnElement;
     }
 
     public JsonElement getElementFromArrayMember(JsonArray acquireJsonArray, String memberName) {
         JsonArray jsonArray = acquireJsonArray;
         JsonElement returnElement = null;
 
-        for (int i = 0; i < jsonArray.size(); i++) {
+        for(int i = 0; i < jsonArray.size(); ++i) {
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
             JsonElement element = jsonObject.get(memberName);
-            if (element != null)
+            if (element != null) {
                 returnElement = element;
+            }
         }
+
         return returnElement;
     }
 

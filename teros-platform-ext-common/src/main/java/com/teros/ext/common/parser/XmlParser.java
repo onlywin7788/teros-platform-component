@@ -1,11 +1,16 @@
 package com.teros.ext.common.parser;
 
-import org.w3c.dom.*;
-import org.xml.sax.InputSource;
-
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -14,10 +19,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 public class XmlParser {
     private Document document;
@@ -79,8 +87,8 @@ public class XmlParser {
     public void addElementProperty(Element acquireElement, String key, String value) throws Exception {
         try {
             acquireElement.setAttribute(key, value);
-        } catch (Exception e) {
-            throw e;
+        } catch (Exception var5) {
+            throw var5;
         }
     }
 
@@ -123,7 +131,7 @@ public class XmlParser {
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPath xpath = xpathFactory.newXPath();
             XPathExpression xPathExpr = xpath.compile(path);
-            NodeList nodeList = (NodeList) xPathExpr.evaluate(this.document, XPathConstants.NODESET);
+            NodeList nodeList = (NodeList)xPathExpr.evaluate(this.document, XPathConstants.NODESET);
             if (nodeList.getLength() > 0) {
                 node = nodeList.item(0);
             }
@@ -142,9 +150,9 @@ public class XmlParser {
             XPathFactory xpathFactory = XPathFactory.newInstance();
             XPath xpath = xpathFactory.newXPath();
             XPathExpression xPathExpr = xpath.compile(path);
-            nodeList = (NodeList) xPathExpr.evaluate(this.document, XPathConstants.NODESET);
+            nodeList = (NodeList)xPathExpr.evaluate(this.document, XPathConstants.NODESET);
 
-            for (int i = 0; i < nodeList.getLength(); ++i) {
+            for(int i = 0; i < nodeList.getLength(); ++i) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() != 3) {
                     arrayNodeList.add(node);
@@ -164,7 +172,7 @@ public class XmlParser {
         try {
             childNodeList = acquireNode.getChildNodes();
 
-            for (int i = 0; i < childNodeList.getLength(); ++i) {
+            for(int i = 0; i < childNodeList.getLength(); ++i) {
                 Node node = childNodeList.item(i);
                 if (node.getNodeType() != 3) {
                     arrayNodeList.add(node);
@@ -201,8 +209,8 @@ public class XmlParser {
             Node node = this.getNode(path);
             NamedNodeMap namedNodeMap = node.getAttributes();
 
-            for (int i = 0; i < namedNodeMap.getLength(); ++i) {
-                Attr attr = (Attr) namedNodeMap.item(i);
+            for(int i = 0; i < namedNodeMap.getLength(); ++i) {
+                Attr attr = (Attr)namedNodeMap.item(i);
                 String attrName = attr.getNodeName();
                 String attrValue = attr.getNodeValue();
                 attrMap.put(attrName, attrValue);
@@ -221,8 +229,8 @@ public class XmlParser {
         try {
             NamedNodeMap namedNodeMap = node.getAttributes();
 
-            for (int i = 0; i < namedNodeMap.getLength(); ++i) {
-                Attr attr = (Attr) namedNodeMap.item(i);
+            for(int i = 0; i < namedNodeMap.getLength(); ++i) {
+                Attr attr = (Attr)namedNodeMap.item(i);
                 String attrName = attr.getNodeName();
                 String attrValue = attr.getNodeValue();
                 attrMap.put(attrName, attrValue);
@@ -286,4 +294,3 @@ public class XmlParser {
         return returnString;
     }
 }
-
