@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="unit_test.network.TerosNEtworkUtilTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-23T03:36:36" hostname="DESKTOP-TVD9SGU" time="0.005">
+  <properties/>
+  <testcase name="pingTest()" classname="unit_test.network.TerosNEtworkUtilTest" time="0.005"/>
+  <system-out><![CDATA[true
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
