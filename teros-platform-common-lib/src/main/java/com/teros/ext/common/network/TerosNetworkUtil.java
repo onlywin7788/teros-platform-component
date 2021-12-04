@@ -1,18 +1,18 @@
 package com.teros.ext.common.network;
 import java.net.InetAddress;
+import java.net.Socket;
 
 public class TerosNetworkUtil {
 
-    public boolean isHostAliveByIPV4(String ipv4)
+    public boolean isHostAlive(String ip, int port)
     {
-        boolean ret = false;
+        boolean result = false;
         try {
-            InetAddress pingcheck = InetAddress.getByName(ipv4);
-            ret = pingcheck.isReachable(300);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            (new Socket(ip, port)).close();
+            result = true;
         }
-        return ret;
+        catch(Exception e) {
+        }
+        return result;
     }
 }
