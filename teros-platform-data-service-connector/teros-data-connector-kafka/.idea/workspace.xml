@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="230246fb-01ce-47f3-ae5b-4cd2c6903408" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teros/ext/data_connector/kafka/Executor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teros/ext/data_connector/kafka/common/config/NodeProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teros/ext/data_connector/kafka/config/NodeConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/teros/ext/data_connector/kafka/information/ProgramInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-ext-message/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/src/main/java/com/teros/data_connector/file/Executor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/src/main/java/com/teros/data_connector/file/common/config/NodeProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/src/main/java/com/teros/data_connector/file/config/NodeConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-file/src/main/java/com/teros/data_connector/file/information/ProgramInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../teros-platform-data-service-connector/teros-data-connector-spec/src/main/java/com/teros/ext/message_connector/spec/MessageConnectorSpec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../teros-message-connector-file/src/main/java/com/ext/teros/message_connector/file/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../teros-message-connector-file/src/main/java/com/ext/teros/message_connector/file/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/7.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/7.1/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/7.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/7.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/7.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../new/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/converter/MessageConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/converter/core/JsonConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/converter/core/XmlConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/loader/MessageSetLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/model/message/Field.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/model/message/Record.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/model/message/Table.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/object/MessageObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/java/com/ext/teros/message/set/MessageSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../teros-ext-message/src/main/resources/application.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/teros/ext/data_connector" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\github\teros-platform-component\message_connector\teros-data-connector-kafka\src\main\java\com\teros\ext\data_connector" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="230246fb-01ce-47f3-ae5b-4cd2c6903408" name="Changes" comment="" />
+      <created>1641133859132</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1641133859132</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
