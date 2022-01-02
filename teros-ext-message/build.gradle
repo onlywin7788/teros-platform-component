@@ -22,7 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	compileOnly fileTree(dir: 'E:/project/teros/ext/common', include: ['*.jar'])
+	compile fileTree(dir: 'E:/project/teros/libs', include: ['*.jar'])
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
