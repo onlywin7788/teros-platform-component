@@ -1,4 +1,4 @@
-package com.teros.ext.data_connector.kafka.information;
+package com.teros.data_connector.kafka.information;
 
 import lombok.Getter;
 

@@ -15,7 +15,7 @@ public class NodeProperties {
 
         for (int i = 0; i < nodeList.size(); i++) {
             node = nodeList.get(i);
-            String nodeKey = xmlParser.getNodeAttrFromNode(node, "key");
+            String nodeKey = xmlParser.getNodeAttrFromNode(node, "name");
 
             if (nodeKey.equals(acquireKey) == true) {
                 break;

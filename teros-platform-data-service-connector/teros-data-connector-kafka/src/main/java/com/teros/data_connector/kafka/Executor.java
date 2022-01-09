@@ -1,9 +1,9 @@
-package com.teros.ext.data_connector.kafka;
+package com.teros.data_connector.kafka;
 
+import com.teros.data_connector.kafka.common.config.NodeProperties;
 import com.teros.ext.common.parser.XmlParser;
-import com.teros.ext.data_connector.kafka.common.config.NodeProperties;
-import com.teros.ext.data_connector.kafka.config.NodeConfig;
-import com.teros.ext.data_connector.kafka.information.ProgramInformation;
+import com.teros.data_connector.kafka.config.NodeConfig;
+import com.teros.data_connector.kafka.information.ProgramInformation;
 import com.teros.ext.message_connector.spec.MessageConnectorSpec;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -16,7 +16,7 @@ import java.util.Properties;
 public class Executor implements MessageConnectorSpec {
 
     XmlParser xmlParser = null;
-    NodeProperties nodeProperties = null;
+    com.teros.data_connector.kafka.common.config.NodeProperties nodeProperties = null;
     NodeConfig nodeConfig = null;
 
     private Properties properties = null;

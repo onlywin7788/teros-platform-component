@@ -1,4 +1,4 @@
-package com.teros.ext.data_connector.kafka.config;
+package com.teros.data_connector.kafka.config;
 
 import lombok.Getter;
 import lombok.Setter;

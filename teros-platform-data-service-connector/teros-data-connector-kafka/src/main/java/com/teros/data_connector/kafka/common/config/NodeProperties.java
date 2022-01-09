@@ -1,4 +1,4 @@
-package com.teros.ext.data_connector.kafka.common.config;
+package com.teros.data_connector.kafka.common.config;
 
 import com.teros.ext.common.parser.XmlParser;
 import org.w3c.dom.Node;
@@ -15,7 +15,7 @@ public class NodeProperties {
 
         for (int i = 0; i < nodeList.size(); i++) {
             node = nodeList.get(i);
-            String nodeKey = xmlParser.getNodeAttrFromNode(node, "key");
+            String nodeKey = xmlParser.getNodeAttrFromNode(node, "name");
 
             if (nodeKey.equals(acquireKey) == true) {
                 break;
